@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
@@ -19,7 +20,7 @@ public class ProductController {
     private ProductService service;
 
     @PostMapping("/api/v1/products")
-    public ResponseEntity<ProductResponse> saveProduct(@RequestBody ProductRequest request) {
+    public ResponseEntity<ProductResponse> saveProduct(@RequestBody @Valid ProductRequest request) {
         System.out.println(request);
         ProductResponse response = service.save(request);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
