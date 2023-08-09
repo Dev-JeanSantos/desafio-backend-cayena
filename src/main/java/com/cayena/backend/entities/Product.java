@@ -2,7 +2,8 @@ package com.cayena.backend.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 public class Product {
     @Id
@@ -13,7 +14,7 @@ public class Product {
     private BigDecimal unitPrice;
     @ManyToOne
     @JoinColumn(name = "supplier_id")
-    private Suplier suplierId;
-    private LocalDate dateOfCreation;
-    private LocalDate dateOfTheLastUpdate;
+    private Supplier supplierId;
+    private LocalDateTime dateOfCreation;
+    private LocalDateTime dateOfTheLastUpdate;
 }
