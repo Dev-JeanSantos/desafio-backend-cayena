@@ -1,5 +1,6 @@
 package com.cayena.backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -12,8 +13,11 @@ import java.time.LocalDateTime;
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("suplier_id")
     private Long suplierId;
     private String name;
+    @JsonProperty("date_of_creation")
     private LocalDateTime dateOfCreation;
+    @JsonProperty("date_of_the_last_update")
     private LocalDateTime dateOfTheLastUpdate;
 }

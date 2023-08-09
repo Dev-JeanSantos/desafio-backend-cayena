@@ -1,6 +1,7 @@
 package com.cayena.backend.controllers;
 
 import com.cayena.backend.dtos.requesties.ProductRequest;
+import com.cayena.backend.dtos.responses.ProductAllResponse;
 import com.cayena.backend.dtos.responses.ProductResponse;
 import com.cayena.backend.services.impl.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +36,18 @@ public class ProductController {
     public ResponseEntity<Page<ProductResponse>> getAllProducts(
 
             @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
+            @RequestParam(value = "linesPerPage", defaultValue = "10") Integer linesPerPage,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction,
             @RequestParam(value = "orderBy", defaultValue = "name") String orderBy
     ){
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy );
         Page<ProductResponse> list = service.getAllProducts(pageRequest);
         return ResponseEntity.ok().body(list);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductAllResponse> getProductById(@PathVariable Long id){
+        ProductAllResponse product = service.getProductById(id);
+        return ResponseEntity.ok().body(product);
     }
 }

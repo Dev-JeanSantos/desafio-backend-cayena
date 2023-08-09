@@ -18,11 +18,12 @@ public class Product {
     private String name;
     private Integer quantityInStock;
     private BigDecimal unitPrice;
+    private LocalDateTime dateOfCreation = LocalDateTime.now();
+    private LocalDateTime dateOfTheLastUpdate;
+
     @ManyToOne
     @JoinColumn(name = "supplier_id")
-    private Supplier supplierId;
-    private LocalDateTime dateOfCreation;
-    private LocalDateTime dateOfTheLastUpdate;
+    private Supplier supplier;
 
     public static Product converterRequest(ProductRequest request, Supplier supplier) {
         Product product = new Product();
@@ -30,8 +31,7 @@ public class Product {
         product.setName(request.getName());
         product.setQuantityInStock(request.getQuantityInStock());
         product.setUnitPrice(request.getUnitPrice());
-        product.setSupplierId(supplier);
-
+        product.setSupplier(supplier);
         return product;
     }
 }

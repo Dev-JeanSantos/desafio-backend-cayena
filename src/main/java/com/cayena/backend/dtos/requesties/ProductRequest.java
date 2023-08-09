@@ -18,7 +18,7 @@ public class ProductRequest {
     private Integer quantityInStock;
     @JsonProperty("unit_price")
     @DecimalMin(value = "0.0", inclusive = false)
-    @Digits(integer = 2, fraction = 2)
+    @Digits(integer = 4, fraction = 2)
     private BigDecimal unitPrice;
     @Min(1)
     @JsonProperty("supplier_id")

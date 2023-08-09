@@ -17,7 +17,7 @@ public class ProductResponse {
         response.setName(product.getName());
         response.setQuantityInStock(product.getQuantityInStock());
         response.setUnitPrice(product.getUnitPrice());
-        response.setSupplierName(product.getSupplierId().getName());
+        response.setSupplierName(product.getSupplier().getName());
         return  response;
     }
 }
