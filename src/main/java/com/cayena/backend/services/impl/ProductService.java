@@ -50,4 +50,23 @@ public class ProductService implements IProductService {
         product.orElseThrow(() -> new NotFoundException("Product Not Found!"));
         repository.delete(product.get());
     }
+
+    @Override
+    public ProductResponse update(Long id, ProductRequest request) {
+        Optional<Product> possibleProduct = repository.findById(id);
+        Product entity = possibleProduct.orElseThrow(() -> new NotFoundException("Product Not found"));
+        montarObjeto(request, entity);
+        Product product = repository.save(entity);
+        return ProductResponse.converter(product);
+
+    }
+
+    private void montarObjeto(ProductRequest request, Product entity) {
+        entity.setName (request.getName());
+        entity.setQuantityInStock(request.getQuantityInStock());
+        entity.setUnitPrice(request.getUnitPrice());
+        Supplier supplier = supplierRepository.getOne(request.getSupplierId());
+        entity.setSupplier(supplier);
+    }
+
 }

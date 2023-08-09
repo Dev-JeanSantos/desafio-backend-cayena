@@ -52,11 +52,13 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ProductResponse> delete(@PathVariable Long id){
+    public ResponseEntity<ProductResponse> deleteProduct(@PathVariable Long id){
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-
-
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id, @RequestBody @Valid ProductRequest request){
+        ProductResponse response = service.update(id, request);
+        return ResponseEntity.ok().body(response);
+    }
 }
