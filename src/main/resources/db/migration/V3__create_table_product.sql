@@ -1,5 +1,5 @@
 CREATE TABLE product (
-  product_id BIGINT NOT NULL,
+  product_id BIGINT NOT NULL AUTO_INCREMENT,
    name VARCHAR(255) NULL,
    quantity_in_stock INT NULL,
    unit_price DECIMAL NULL,
