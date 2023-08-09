@@ -8,6 +8,8 @@ import com.cayena.backend.repositories.ProductRepository;
 import com.cayena.backend.repositories.SupplierRepository;
 import com.cayena.backend.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,5 +25,11 @@ public class ProductService implements IProductService {
         Supplier supplier = supplierRepository.getOne(request.getSupplierId());
         Product product = repository.save(Product.converterRequest(request, supplier));
         return ProductResponse.converter(product);
+    }
+
+    @Override
+    public Page<ProductResponse> getAllProducts(PageRequest pageRequest) {
+        Page<Product> lista = repository.findAll(pageRequest);
+        return lista.map(ProductResponse::converter);
     }
 }
