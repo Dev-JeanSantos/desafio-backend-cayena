@@ -40,7 +40,14 @@ public class ProductService implements IProductService {
     @Override
     public ProductAllResponse getProductById(Long id) {
         Optional<Product> possibleProduct = repository.findById(id);
-        Product entity = possibleProduct.orElseThrow(() -> new NotFoundException("Product not found"));
+        Product entity = possibleProduct.orElseThrow(() -> new NotFoundException("Product Not found"));
         return ProductAllResponse.converter(entity);
+    }
+
+    @Override
+    public void delete(Long id) {
+        Optional<Product> product = repository.findById(id);
+        product.orElseThrow(() -> new NotFoundException("Product Not Found!"));
+        repository.delete(product.get());
     }
 }

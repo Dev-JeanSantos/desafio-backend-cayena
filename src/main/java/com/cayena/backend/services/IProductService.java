@@ -12,4 +12,6 @@ public interface IProductService {
     Page<ProductResponse> getAllProducts(PageRequest pageRequest);
 
     ProductAllResponse getProductById(Long id);
+
+    void delete(Long id);
 }
