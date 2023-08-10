@@ -1,6 +1,7 @@
 package com.cayena.backend.dtos.requesties;
 
 import com.cayena.backend.enums.UpdateType;
+import com.cayena.backend.services.validations.EnumNamePattern;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -11,6 +12,7 @@ import javax.validation.constraints.PositiveOrZero;
 public class QuantityProductRequest {
 
     @JsonProperty("update_type")
+    @EnumNamePattern(anyOf = {UpdateType.DECREASE, UpdateType.INCREASE})
     private UpdateType updateType;
 
     @NotNull

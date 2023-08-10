@@ -1,6 +1,6 @@
 package com.cayena.backend.services.impl;
 
-import com.cayena.backend.config.NotFoundException;
+import com.cayena.backend.services.exceptions.ResourceNotFoundException;
 import com.cayena.backend.dtos.requesties.ProductRequest;
 import com.cayena.backend.dtos.requesties.QuantityProductRequest;
 import com.cayena.backend.dtos.responses.ProductAllResponse;
@@ -29,7 +29,9 @@ public class ProductService implements IProductService {
 
     @Override
     public ProductResponse save(ProductRequest request) {
-        Supplier supplier = supplierRepository.getOne(request.getSupplierId());
+        Optional<Supplier> possibleSupplier = supplierRepository.findById(request.getSupplierId());
+        Supplier supplier = possibleSupplier.orElseThrow(
+                () -> new ResourceNotFoundException("Supplier with id:" +request.getSupplierId() + " not found"));
         Product product = repository.save(Product.converterRequest(request, supplier));
         return ProductResponse.converter(product);
     }
@@ -43,21 +45,21 @@ public class ProductService implements IProductService {
     @Override
     public ProductAllResponse getProductById(Long id) {
         Optional<Product> possibleProduct = repository.findById(id);
-        Product entity = possibleProduct.orElseThrow(() -> new NotFoundException("Product Not found"));
+        Product entity = possibleProduct.orElseThrow(() -> new ResourceNotFoundException("Product with id:" +id+ " not found"));
         return ProductAllResponse.converter(entity);
     }
 
     @Override
     public void delete(Long id) {
         Optional<Product> product = repository.findById(id);
-        product.orElseThrow(() -> new NotFoundException("Product Not Found!"));
+        product.orElseThrow(() -> new ResourceNotFoundException("Product with id:" +id+ " not found"));
         repository.delete(product.get());
     }
 
     @Override
     public ProductResponse update(Long id, ProductRequest request) {
         Optional<Product> possibleProduct = repository.findById(id);
-        Product entity = possibleProduct.orElseThrow(() -> new NotFoundException("Product Not found"));
+        Product entity = possibleProduct.orElseThrow(() -> new ResourceNotFoundException("Product with id:" +id+ " not found"));
         assembleObject(request, entity);
         Product product = repository.save(entity);
         return ProductResponse.converter(product);
@@ -67,7 +69,7 @@ public class ProductService implements IProductService {
     @Override
     public ProductResponse updateQuantityStock(Long id, QuantityProductRequest request) {
         Optional<Product> possibleProduct = repository.findById(id);
-        Product entity = possibleProduct.orElseThrow(() -> new NotFoundException("Product Not found"));
+        Product entity = possibleProduct.orElseThrow(() -> new ResourceNotFoundException("Product with id:" +id+ " not found"));
 
         Integer quantityInStock = entity.getQuantityInStock();
         UpdateType type = request.getUpdateType();
@@ -93,8 +95,9 @@ public class ProductService implements IProductService {
         entity.setName(request.getName());
         entity.setQuantityInStock(request.getQuantityInStock());
         entity.setUnitPrice(request.getUnitPrice());
-        Supplier supplier = supplierRepository.getOne(request.getSupplierId());
+        Optional<Supplier> possibleSupplier = supplierRepository.findById(request.getSupplierId());
+        Supplier supplier = possibleSupplier.orElseThrow(
+                () -> new ResourceNotFoundException("Supplier with id:" +request.getSupplierId() + " not found"));
         entity.setSupplier(supplier);
     }
-
 }
