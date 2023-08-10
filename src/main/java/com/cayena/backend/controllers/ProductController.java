@@ -1,6 +1,7 @@
 package com.cayena.backend.controllers;
 
 import com.cayena.backend.dtos.requesties.ProductRequest;
+import com.cayena.backend.dtos.requesties.QuantityProductRequest;
 import com.cayena.backend.dtos.responses.ProductAllResponse;
 import com.cayena.backend.dtos.responses.ProductResponse;
 import com.cayena.backend.services.impl.ProductService;
@@ -24,7 +25,6 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ProductResponse> saveProduct(@RequestBody @Valid ProductRequest request) {
-        System.out.println(request);
         ProductResponse response = service.save(request);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
                 buildAndExpand(request.getId()).toUri();
@@ -47,8 +47,8 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ProductAllResponse> getProductById(@PathVariable Long id){
-        ProductAllResponse product = service.getProductById(id);
-        return ResponseEntity.ok().body(product);
+        ProductAllResponse response = service.getProductById(id);
+        return ResponseEntity.ok().body(response);
     }
 
     @DeleteMapping("/{id}")
@@ -59,6 +59,11 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id, @RequestBody @Valid ProductRequest request){
         ProductResponse response = service.update(id, request);
+        return ResponseEntity.ok().body(response);
+    }
+    @PatchMapping("/{id}")
+    public ResponseEntity<ProductResponse> increasOrDecreaseQuantityStock(@PathVariable Long id, @RequestBody @Valid QuantityProductRequest request){
+        ProductResponse response = service.updateQuantityStock(id, request);
         return ResponseEntity.ok().body(response);
     }
 }
