@@ -107,18 +107,17 @@ public class ProductControllerTests {
     }
 
     @Test
-    @DisplayName("replace increment our decrement quantity product when successful")
-    void replace_IncrementOurDecrementQuantityProduct_WhenSuccessful(){
+    @DisplayName("replace increment quantity product when successful")
+    void replace_IncrementQuantityProduct_WhenSuccessful(){
 
         Assertions.assertThatCode(() -> controller.increasOrDecreaseQuantityStock
-                (1L, QuantityProductCreate.updateQuantityProduct()))
+                (1L, QuantityProductCreate.incrementQuantityProduct()))
                 .doesNotThrowAnyException();
 
         ResponseEntity<ProductResponse> productResponse = controller.increasOrDecreaseQuantityStock
-                (1L,QuantityProductCreate.updateQuantityProduct());
+                (1L,QuantityProductCreate.incrementQuantityProduct());
 
         Assertions.assertThat(productResponse).isNotNull();
-
         Assertions.assertThat(productResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
     @Test
