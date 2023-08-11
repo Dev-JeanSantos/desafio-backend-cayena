@@ -201,7 +201,7 @@ Exemplo de solicitação:
 - Método: `GET`
 - Endpoint: `/api/v1/products/{id}`
 ```http
-GET /api/v1/products{id}
+GET /api/v1/products/{id}
 ```
 Não passamos nada no corpo da requisição da aplicação.
 
@@ -241,7 +241,7 @@ Exemplo de solicitação:
 - Método: `PUT`
 - Endpoint: `/api/v1/products/{id}`
 ```http
-GET /api/v1/products{id}
+GET /api/v1/products/{id}
 ```
 Exemplo de REQUEST:
 ```json
@@ -290,7 +290,7 @@ Exemplo de solicitação:
 - Método: `DELETE`
 - Endpoint: `/api/v1/products/{id}`
 ```http
-DELETE /api/v1/products{id}
+DELETE /api/v1/products/{id}
 ```
 Não passamos nada no corpo da requisição da aplicação.
 
@@ -322,7 +322,7 @@ Exemplo de solicitação:
 - `{quantity_inStock}`: Quantidade de entrada ou saída;
 
 ```http
-PATCH /api/v1/products{id}
+PATCH /api/v1/products/{id}
 ```
 Exemplo de REQUEST:
 ```json
