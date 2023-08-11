@@ -358,7 +358,7 @@ Exemplo de RESPONSE:
 ## Documentação do Swagger
 
 A documentação da API pode ser encontrada no Swagger. Para visualizá-la,
-acesse: [Documentação do Swagger](https://ju-marketplace-8b8b843c329f.herokuapp.com/swagger-ui/index.html).
+acesse: [Documentação do Swagger](http://localhost:8080/swagger-ui.html).
 
 ## Licença
 
