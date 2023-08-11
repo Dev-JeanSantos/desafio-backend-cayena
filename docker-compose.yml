@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+  db:
+    image: mysql:8.0.28
+    container_name: cayenadb
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    ports:
+      - '3307:3306'
+    environment:
+      MYSQL_DATABASE: "cayena"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "root"
+      MYSQL_ROOT_PASSWORD: "root"
+    networks:
+      rede_interna:
+  app:
+    image: backend
+    container_name: backend
+    environment:
+      SPRING.DATASOURCE.URL: "jdbc:mysql://localhost:3306/cayena?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true"
+      SPRING.DATASOURCE.USERNAME: "root"
+      SPRING.DATASOURCE.PASSWORD: "root"
+    ports:
+      - '3080:8080'
+    depends_on:
+      - db
+networks:
+  rede_interna:
+volumes:
+  db_data:

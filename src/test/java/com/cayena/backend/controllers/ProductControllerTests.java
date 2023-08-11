@@ -1,6 +1,5 @@
 package com.cayena.backend.controllers;
 
-import com.cayena.backend.dtos.requesties.ProductRequest;
 import com.cayena.backend.dtos.responses.ProductAllResponse;
 import com.cayena.backend.dtos.responses.ProductResponse;
 import com.cayena.backend.services.impl.ProductService;
@@ -17,6 +16,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
@@ -39,9 +40,8 @@ public class ProductControllerTests {
 
         BDDMockito.when(productServiceMockk.getProductById(ArgumentMatchers.anyLong()))
                 .thenReturn(ProductAllResponseCreate.getProductById());
+        BDDMockito.doNothing().when(productServiceMockk).delete(ArgumentMatchers.anyLong());
 
-        BDDMockito.when(productServiceMockk.save(ArgumentMatchers.any(ProductRequest.class)))
-                .thenReturn(ProductResponseCreate.saveProduct());
     }
 
     @Test
@@ -70,17 +70,17 @@ public class ProductControllerTests {
         Assertions.assertThat(productAllResponse).isNotNull();
         Assertions.assertThat(productAllResponse.getName()).isNotNull().isEqualTo(expectedName);
     }
+    @Test
+    @DisplayName("should delete a product successfully passing a valid id")
+    void shouldDeleteAProductSuccessfullyPassingAValidId(){
 
-//    @Test
-//    @DisplayName("must return the product when creating a new product")
-//    void mustReturnTheProductWhenCreatingANewProduct(){
-//
-//        ProductResponse productResponse = controller.saveProduct(ProductRequestCreate.saveProduct()).getBody();
-//
-//        Assertions.assertThat(productResponse).isNotNull().isEqualTo(ProductRequestCreate.saveProduct());
-//
-//    }
+        Assertions.assertThatCode(() ->controller.deleteProduct(1L))
+                .doesNotThrowAnyException();
 
+        ResponseEntity<ProductResponse> entity = controller.deleteProduct(1L);
 
+        Assertions.assertThat(entity).isNotNull();
 
+        Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    }
 }
