@@ -234,7 +234,7 @@ Exemplo de RESPONSE:
 - `200 OK`: Produto criado com sucesso.
 - `404 Not Found`: Caso forneça um ID do produto não cadastrado.
 __________
-### Atualizar um produto:
+### Incrementar ou Decrementar a quantidade do produto no estoque:
 > Request
 
 Exemplo de solicitação:
@@ -315,6 +315,12 @@ __________
 Exemplo de solicitação:
 - Método: `PATCH`
 - Endpoint: `/api/v1/products/{id}`
+
+  Parâmetros do body da chamada:
+- `{update_type}`: Tipo da atualização:
+  (INCREMENT OU DECREMENT);
+- `{quantity_inStock}`: Quantidade de entrada ou saída;
+
 ```http
 PATCH /api/v1/products{id}
 ```
@@ -329,7 +335,7 @@ Exemplo de REQUEST:
 > Response
 
 - Código de resposta: `200 OK`
-- Corpo da resposta: `ProductResponse` contendo os itens do produto atualizado.
+- Corpo da resposta: `ProductResponse` contendo a quantidade dos itens do produto atualizado.
 
 Exemplo de RESPONSE:
 
