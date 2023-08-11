@@ -309,7 +309,7 @@ Exemplo de RESPONSE:
 - `400 Bad Request`: Caso forneça a um ou mais campos entradas inválidas.
 
 __________
-### Atualizar um produto:
+### INCREMENTAR OU DECREMENTAR A QUANTIDADE DE ITENS DE UM PRODUTO:
 > Request
 
 Exemplo de solicitação:
