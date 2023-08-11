@@ -5,7 +5,6 @@ import com.cayena.backend.entities.Supplier;
 import java.time.LocalDateTime;
 
 public class SupplierResponseCreate {
-
     public static Supplier saveSupplier() {
         return Supplier.builder()
                 .suplierId(1L)
