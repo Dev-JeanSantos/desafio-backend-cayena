@@ -354,15 +354,10 @@ Exemplo de RESPONSE:
 A documentação da API pode ser encontrada no Swagger. Para visualizá-la,
 acesse: [Documentação do Swagger](https://ju-marketplace-8b8b843c329f.herokuapp.com/swagger-ui/index.html).
 
-## Hospedagem no Heroku
-
-A Solução está hospedada em produção na plataforma Heroku na seguinte URL:
-[https://ju-marketplace-8b8b843c329f.herokuapp.com](https://ju-marketplace-8b8b843c329f.herokuapp.com)
-
 ## Licença
 
 Este projeto está licenciado sob a licença MIT. Consulte o
-arquivo <a href="https://github.com/Dev-JeanSantos/tqi_kotlin_backend_developer_2023/blob/main/LICENSE">(LICENSE)</a> para obter.
+arquivo <a href="https://github.com/Dev-JeanSantos/desafio-backend-cayena/blob/main/LICENSE">(LICENSE)</a> para obter.
 
 ## Autor
 
