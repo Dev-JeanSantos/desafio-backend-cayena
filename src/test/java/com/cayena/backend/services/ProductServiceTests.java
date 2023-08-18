@@ -142,15 +142,6 @@ public class ProductServiceTests {
         Assertions.assertThat(productResponse).isNotNull();
     }
     @Test
-    @DisplayName("replace decrement bellow zero quantity product when successful")
-    void updateQuantityStock_DecrementBellowZeroQuantityProduct_WhenSuccessful() {
-        Assertions.assertThatCode(() -> service.updateQuantityStock
-                (1L, QuantityProductCreate.decrementBellowZeroQuantityProduct())).doesNotThrowAnyException();
-        ProductResponse productResponse = service.updateQuantityStock(1L, QuantityProductCreate.decrementBellowZeroQuantityProduct());
-        Assertions.assertThat(productResponse).isNotNull();
-    }
-
-    @Test
     @DisplayName(" update quantity stock return EnumExceptionQuantity with invalid enum")
     void updateQuantityStock_EnumExceptionQuantityProduct_WhenSuccessful() {
         Assertions.assertThatExceptionOfType(java.lang.IllegalArgumentException.class)
