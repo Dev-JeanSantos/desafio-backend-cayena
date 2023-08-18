@@ -1,32 +1,37 @@
-version: "3.7"
+version: "2.4"
+x-database-variables: &database-variables
+  SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/cayena?createDatabaseIfNotExist=true
+  SPRING_DATASOURCE_USERNAME: root
+  SPRING_DATASOURCE_PASSWORD: root
 services:
-  db:
-    image: mysql:8.0.28
-    container_name: cayenadb
+  mysqldb:
+    image: mysql
+    container_name: database
+    networks:
+      - app.network
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+    mem_limit: 256m
     volumes:
       - db_data:/var/lib/mysql
-    restart: always
-    ports:
-      - '3307:3306'
-    environment:
-      MYSQL_DATABASE: "cayena"
-      MYSQL_USER: "root"
-      MYSQL_PASSWORD: "root"
-      MYSQL_ROOT_PASSWORD: "root"
-    networks:
-      rede_interna:
+
   app:
-    image: backend
-    container_name: backend
-    environment:
-      SPRING.DATASOURCE.URL: "jdbc:mysql://localhost:3306/cayena?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true"
-      SPRING.DATASOURCE.USERNAME: "root"
-      SPRING.DATASOURCE.PASSWORD: "root"
+    container_name: app-backend
+    image: jeancbsan/products-cayena:0.0.1-SNAPSHOT
+    networks:
+      - app.network
     ports:
-      - '3080:8080'
+      - 8080:8080
+    environment:
+      <<: *database-variables
+    mem_limit: 512m
     depends_on:
-      - db
-networks:
-  rede_interna:
+      - mysqldb
 volumes:
   db_data:
+
+networks:
+  app.network:
+    driver: bridge

@@ -59,9 +59,10 @@ Para executar em desenvolvimento segue as instruções onde as etapas necessári
 diferentes ambientes (Unix e Windows) com o perfil de dev ativado executando em um banco de dados Mysql dockerizado.
 
 1. Clone o repositório: git clone `https://github.com/Dev-JeanSantos/desafio-backend-cayena`
-2. Pré-requisito: Docker instalado. Executar o comando docker: `docker run -d -p 3306:3306 --name mysql-container  -e MYSQL_ROOT_PASSWORD=root  -e  MYSQL_PASSWORD=root mysql:8.0.28`
-3. Inicie a aplicação no ambiente Windows: `mvn spring-boot:run  -Dspring-boot.run.profiles=dev`
-4. Inicie a aplicação no ambiente Unix: `./mvn spring-boot:run  -Dspring-boot.run.profiles=dev`
+2. Pré-requisito: Maven.
+ Buildar a aplicação com o comando: `mvn jib:dockerBuild` na pasta backend;
+3. Pré-requisito: Docker.
+ Inicie a aplicação e o banco com comando: `docker-compose up`.
 
 
 Seguem alguns links úteis:

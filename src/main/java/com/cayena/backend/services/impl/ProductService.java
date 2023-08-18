@@ -1,6 +1,5 @@
 package com.cayena.backend.services.impl;
 
-import com.cayena.backend.services.exceptions.ResourceNotFoundException;
 import com.cayena.backend.dtos.requesties.ProductRequest;
 import com.cayena.backend.dtos.requesties.QuantityProductRequest;
 import com.cayena.backend.dtos.responses.ProductAllResponse;
@@ -11,6 +10,8 @@ import com.cayena.backend.enums.UpdateType;
 import com.cayena.backend.repositories.ProductRepository;
 import com.cayena.backend.repositories.SupplierRepository;
 import com.cayena.backend.services.IProductService;
+import com.cayena.backend.services.exceptions.BadRequestException;
+import com.cayena.backend.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -82,7 +83,7 @@ public class ProductService implements IProductService {
             if (quantityInStock >= 0){
                 entity.setQuantityInStock(quantityInStock);
             } else {
-                System.out.println("stock quantity cannot be less than zero");
+               throw new BadRequestException("Quantity exceeds minimum limit of zero");
             }
         }
         entity.setDateOfTheLastUpdate(LocalDateTime.now());
