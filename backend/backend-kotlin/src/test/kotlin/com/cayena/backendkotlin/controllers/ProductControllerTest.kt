@@ -3,9 +3,7 @@ package com.cayena.backendkotlin.controllers
 import com.cayena.backendkotlin.dtos.requests.ProductRequest
 import com.cayena.backendkotlin.mocks.BuildProductRequest
 import com.cayena.backendkotlin.repositories.ProductRepository
-import com.cayena.backendkotlin.services.impl.ProductService
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.mockk.impl.annotations.InjectMockKs
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -67,7 +65,7 @@ class ProductControllerTest{
             .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Alcatra Bovina"))
             .andExpect(MockMvcResultMatchers.jsonPath("$.quantityInStock").value("150"))
             .andExpect(MockMvcResultMatchers.jsonPath("$.unitPrice").value("48.0"))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.supplierName").value("GUANABARA"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.supplierName").value("SACOLÃO DO PEDRÃO"))
             .andDo(MockMvcResultHandlers.print()
             )
     }
@@ -148,7 +146,7 @@ class ProductControllerTest{
             .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Alcatra Bovina"))
             .andExpect(MockMvcResultMatchers.jsonPath("$.quantityInStock").value(150))
             .andExpect(MockMvcResultMatchers.jsonPath("$.unitPrice").value(48.0))
-            .andExpect(MockMvcResultMatchers.jsonPath("$.supplierName").value("GUANABARA"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.supplierName").value("SACOLÃO DO PEDRÃO"))
             .andDo(MockMvcResultHandlers.print()
             )
     }
@@ -190,15 +188,20 @@ class ProductControllerTest{
     @Test
     @DisplayName("getAllProducts returns all products pagination when search without any parameters")
     fun `getAllProducts_ReturnsAllProductsPagination_WhenSearchWithoutAnyParameters`(){
+
+        repository.save(BuildProductRequest.buildProductRequest().toEntity())
+
         mockMvc.perform(
             MockMvcRequestBuilders.get("$URL/")
                 .accept(MediaType.APPLICATION_JSON)
         )
             .andExpect(MockMvcResultMatchers.status().isOk)
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.timestamp").exists())
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(400))
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.error").value("BAD_REQUEST"))
-            .andDo(MockMvcResultHandlers.print()
-            )
+            .andExpect(MockMvcResultMatchers.jsonPath("$.size()").value(11))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.content").isArray)
+            .andExpect(MockMvcResultMatchers.jsonPath("$.content.[0].name").value("Alcatra Bovina"))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.content.[0].quantityInStock").value(150))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.content.[0].unitPrice").value(48.0))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.content.[0].supplierName").value("SACOLÃO DO PEDRÃO"))
+            .andDo(MockMvcResultHandlers.print())
     }
 }
