@@ -10,13 +10,13 @@ data class Product(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val productId: Long? = null,
-    val name: String,
-    val quantityInStock: Int,
-    val unitPrice: BigDecimal,
+    var name: String,
+    var quantityInStock: Int,
+    var unitPrice: BigDecimal,
     val dateOfCreation: LocalDateTime? = LocalDateTime.now(),
-    val dateOfThelastUpdate: LocalDateTime? = LocalDateTime.now(),
+    var dateOfTheLastUpdate: LocalDateTime? = LocalDateTime.now(),
 
     @ManyToOne
     @JoinColumn(name = "supplier_id")
-    val supplier: Supplier
+    var supplier: Supplier
 )

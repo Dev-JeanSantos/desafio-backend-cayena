@@ -12,3 +12,4 @@ data class Supplier (
     val dateOfCreation: LocalDateTime? = LocalDateTime.now(),
     val dateOfTheLastUpdate: LocalDateTime? = LocalDateTime.now()
 )
+
