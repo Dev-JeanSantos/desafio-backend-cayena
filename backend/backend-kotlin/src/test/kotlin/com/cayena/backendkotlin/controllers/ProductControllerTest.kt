@@ -47,11 +47,8 @@ class ProductControllerTest {
         repository.deleteAll()
         product = repository.save(BuildProductRequest.buildProductRequest().toEntity())
     }
-
-
     @AfterEach
     fun tearDown() = repository.deleteAll()
-
 
     @Test
     @DisplayName("save returns product when successful")
