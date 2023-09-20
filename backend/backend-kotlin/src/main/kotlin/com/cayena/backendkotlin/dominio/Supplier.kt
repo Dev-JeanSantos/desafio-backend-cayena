@@ -8,9 +8,13 @@ import javax.persistence.*
 data class Supplier (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("supplier_id")
     val supplierId: Long,
+    @JsonProperty("name_supplier")
     val nameSupplier: String,
+    @JsonProperty("date_of_creation")
     val dateOfCreation: LocalDateTime? = LocalDateTime.now(),
+    @JsonProperty("date_of_the_last_update")
     val dateOfTheLastUpdate: LocalDateTime? = LocalDateTime.now()
 )
 

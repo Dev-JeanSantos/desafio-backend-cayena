@@ -24,15 +24,15 @@ data class ProductRequest(
     val unitPrice: BigDecimal,
 
     @Min(1)
-    @JsonProperty("id_supplier")
-    val idSupplier: Long
+    @JsonProperty("supplier_id")
+    val supplierId: Long
 ){
     fun toEntity(): Product = Product(
         name = this.name,
         quantityInStock = this.quantityInStock,
         unitPrice = this.unitPrice,
         supplier = Supplier(
-            supplierId = 1,
+            supplierId = supplierId ,
             nameSupplier = "GUANABARA",
             dateOfCreation = LocalDateTime.now(),
             dateOfTheLastUpdate = LocalDateTime.now()
