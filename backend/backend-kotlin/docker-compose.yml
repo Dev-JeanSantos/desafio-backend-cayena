@@ -1,37 +1,40 @@
-version: "2.4"
-#x-database-variables: &database-variables
-#  SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/cayena?createDatabaseIfNotExist=true
-#  SPRING_DATASOURCE_USERNAME: root
-#  SPRING_DATASOURCE_PASSWORD: root
+version: '3'
+
 services:
-#  mysqldb:
-#    image: mysql
-#    container_name: database
-#    networks:
-#      - app.network
-#    environment:
-#      MYSQL_ROOT_PASSWORD: root
-#    ports:
-#      - 3306:3306
-#    mem_limit: 256m
-#    volumes:
-#      - db_data:/var/lib/mysql
+
+  db:
+    image: mysql:5.7
+    command: --innodb-use-native-aio=0
+    container_name: db
+    restart: always
+    tty: true
+    environment:
+      - MYSQL_DATABASE=mysql-db
+      - MYSQL_ROOT_PASSWORD=root
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 20s
+      timeout: 30s
+      retries: 5
+    volumes:
+      - ./mysql:/var/lib/mysql_db
+      - "./bd-scripts/schema.sql:/docker-entrypoint-initdb.d/1.sql"
+    networks:
+      - network-app
 
   app:
-    container_name: app-backend-kotlin
-    image: jeancbsan/products-cayena-kotlin:0.0.1-SNAPSHOT
-    networks:
-      - app.network
+    build:
+      context: .
+    container_name: app
+    tty: true
     ports:
-      - 8080:8080
-#    environment:
-#      <<: *database-variables
-    mem_limit: 512m
-#    depends_on:
-#      - mysqldb
-#volumes:
-#  db_data:
+      - "8090:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - network-app
 
 networks:
-  app.network:
+  network-app:
     driver: bridge

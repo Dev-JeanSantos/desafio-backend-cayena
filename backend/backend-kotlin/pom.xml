@@ -16,11 +16,6 @@
 	<properties>
 		<java.version>11</java.version>
 		<kotlin.version>1.6.21</kotlin.version>
-		<jib-maven-plugin.version>2.6.0</jib-maven-plugin.version>
-		<docker.distroless.image>gcr.io/distroless/java:11</docker.distroless.image>
-		<docker.repo.url>jeancbsan</docker.repo.url>
-		<docker.repo.project>products-cayena-kotlin</docker.repo.project>
-		<docker.image.name>${docker.repo.url}/${docker.repo.project}</docker.image.name>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -142,25 +137,6 @@
 						<version>${kotlin.version}</version>
 					</dependency>
 				</dependencies>
-			</plugin>
-			<plugin>
-				<groupId>com.google.cloud.tools</groupId>
-				<artifactId>jib-maven-plugin</artifactId>
-				<version>${jib-maven-plugin.version}</version>
-				<configuration>
-					<from>
-						<image>${docker.distroless.image}</image>
-					</from>
-					<to>
-						<image>${docker.image.name}</image>
-						<tags>
-							<tag>${project.version}</tag>
-						</tags>
-					</to>
-					<container>
-						<mainClass>com.cayena.backendkotlin.BackendKotlinApplication</mainClass>
-					</container>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
