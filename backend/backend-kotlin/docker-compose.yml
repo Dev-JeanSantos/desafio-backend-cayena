@@ -17,7 +17,7 @@ services:
       timeout: 30s
       retries: 5
     volumes:
-      - ./mysql:/var/lib/mysql_db
+      - ./devjs_data:/var/lib/mysql_db
       - "./bd-scripts/schema.sql:/docker-entrypoint-initdb.d/1.sql"
     networks:
       - network-app
@@ -34,6 +34,25 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - network-app
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - "./src/main/resources/prometheus.yml:/etc/prometheus/prometheus.yml"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    ports:
+      - "9090:9090"
+    networks:
+      - network-app
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
     networks:
       - network-app
 

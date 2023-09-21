@@ -4,6 +4,8 @@ import com.cayena.backendkotlin.dtos.requests.ProductRequest
 import com.cayena.backendkotlin.dtos.requests.QuantityProductRequest
 import com.cayena.backendkotlin.dtos.responses.ProductResponse
 import com.cayena.backendkotlin.services.impl.ProductService
+import io.swagger.v3.oas.annotations.Hidden
+import org.springdoc.api.annotations.ParameterObject
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -39,8 +41,8 @@ class ProductController(
 
     @GetMapping
     fun getAllProducts(
-        @RequestParam(required = false) nameProduct: String?,
-        @PageableDefault(size = 10, sort = ["productId"], direction = Sort.Direction.DESC) pageable: Pageable
+        @RequestParam(required = false)nameProduct: String?,
+       @ParameterObject @PageableDefault(size = 10, sort = ["productId"], direction = Sort.Direction.DESC) pageable: Pageable
     ): ResponseEntity<Page<ProductResponse>> {
         val products: Page<ProductResponse> = service.getAllProducts(nameProduct, pageable)
         return ResponseEntity.ok().body(products)
