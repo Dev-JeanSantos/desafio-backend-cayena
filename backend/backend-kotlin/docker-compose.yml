@@ -3,7 +3,7 @@ version: '3'
 services:
 
   db:
-    image: mysql:5.7
+    image: mysql:latest
     command: --innodb-use-native-aio=0
     container_name: db
     restart: always
@@ -25,6 +25,8 @@ services:
   app:
     build:
       context: .
+      dockerfile: Dockerfile
+    image: jeancbsan/app:v1
     container_name: app
     tty: true
     ports:
